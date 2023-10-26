@@ -41,6 +41,16 @@ local packer_result = require('packer').startup(function(use)
     use 'matbme/JABS.nvim'
     use 'sbdchd/neoformat'
 
+    use {
+        'nvim-telescope/telescope.nvim', tag = '0.1.x',
+        requires = 'nvim-lua/plenary.nvim'
+    }
+
+    use {
+        "folke/todo-comments.nvim",
+        requires = "nvim-lua/plenary.nvim",
+    }
+
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
     if packer_bootstrap then
@@ -52,5 +62,6 @@ require('nvim-tree-config')
 require('JABS-config')
 require('nvim-treesitter-config')
 require('neoformat-config')
+require('todo-comments-config')
 
 return packer_result
