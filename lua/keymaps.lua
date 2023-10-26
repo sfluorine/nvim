@@ -17,4 +17,4 @@ vim.keymap.set('n', '<C-Right>', ':vertical resize +2<CR>', opts)
 
 vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>', opts)
 vim.keymap.set('n', '<leader>b', ':JABSOpen<CR>', opts)
-vim.keymap.set('n', '<leader>bf', ':Neoformat<CR>', opts)
+vim.keymap.set('n', '<leader>fb', ':Neoformat<CR>', opts)
