@@ -1,5 +1,3 @@
-require('tokyonight-config')
-
 local colorscheme = 'tokyonight'
 
 local ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
