@@ -34,9 +34,7 @@ vim.keymap.set('n', '<leader>tn', ':TodoTelescope keywords=NOTE<CR>', opts)
 vim.keymap.set('n', '<leader>th', ':TodoTelescope keywords=HACK<CR>', opts)
 vim.keymap.set('n', '<leader>tqf', ':TodoQuickFix<CR>', opts)
 
-vim.keymap.set('n', '<leader>ts', ':lua MiniTrailspace.trim()<CR>', opts)
-
-vim.keymap.set({ "n", "x" }, "<leader>sr", function() require("ssr").open() end)
+vim.keymap.set({'n', 'v'}, '<leader>/', ':CommentToggle<CR>', opts)
 
 -- Aligns to 1 character
 vim.keymap.set(
