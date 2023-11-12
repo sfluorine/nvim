@@ -24,6 +24,50 @@ require('pckr').add{
 
     'mg979/vim-visual-multi';
 
+    'neovim/nvim-lspconfig';
+
+    'hrsh7th/cmp-nvim-lsp';
+    'hrsh7th/cmp-buffer';
+    'hrsh7th/cmp-path';
+    'hrsh7th/cmp-cmdline';
+    'hrsh7th/nvim-cmp';
+
+    'L3MON4D3/LuaSnip';
+    'saadparwaiz1/cmp_luasnip';
+
+    { 
+        'rebelot/kanagawa.nvim',
+
+        config = function()
+            require('kanagawa').setup({
+                compile = false,             -- enable compiling the colorscheme
+                undercurl = true,            -- enable undercurls
+                commentStyle = { italic = true },
+                functionStyle = {},
+                keywordStyle = { italic = true },
+                statementStyle = { bold = true },
+                typeStyle = { italic = true, bold = true },
+                transparent = true,         -- do not set background color
+                dimInactive = false,         -- dim inactive window `:h hl-NormalNC`
+                terminalColors = true,       -- define vim.g.terminal_color_{0,17}
+                colors = {                   -- add/modify theme and palette colors
+                    palette = {},
+                    theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
+                },
+
+                overrides = function(colors) -- add/modify highlights
+                    return {}
+                end,
+
+                theme = "wave",              -- Load "wave" theme when 'background' option is not set
+                background = {               -- map the value of 'background' option to a theme
+                    dark = "wave",           -- try "dragon" !
+                    light = "lotus"
+                },
+            })
+        end
+    };
+
     {
         'folke/tokyonight.nvim',
 
@@ -31,9 +75,9 @@ require('pckr').add{
             require("tokyonight").setup({
                 -- your configuration comes here
                 -- or leave it empty to use the default settings
-                style = "moon", -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
+                style = "night", -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
                 light_style = "day", -- The theme is used when the background is set to light
-                transparent = true, -- Enable this to disable setting the background color
+                transparent = false, -- Enable this to disable setting the background color
                 terminal_colors = true, -- Configure the colors used when opening a `:terminal` in [Neovim](https://github.com/neovim/neovim)
                 styles = {
                     -- Style to be applied to different syntax groups
@@ -50,7 +94,7 @@ require('pckr').add{
                 day_brightness = 0.3, -- Adjusts the brightness of the colors of the **Day** style. Number between 0 and 1, from dull to vibrant colors
                 hide_inactive_statusline = false, -- Enabling this option, will hide inactive statuslines and replace them with a thin border instead. Should work with the standard **StatusLine** and **LuaLine**.
                 dim_inactive = false, -- dims inactive windows
-                lualine_bold = false, -- When `true`, section headers in the lualine theme will be bold
+                lualine_bold = true, -- When `true`, section headers in the lualine theme will be bold
 
                 --- You can override specific color groups to use other groups or a hex color
                 --- function will be called with a ColorScheme table
@@ -162,11 +206,6 @@ require('pckr').add{
         config = function()
             require('todo-comments').setup()
         end
-    };
-
-    {
-        'Vonr/align.nvim',
-        branch = "v2",
     };
 
     {

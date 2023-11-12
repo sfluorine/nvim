@@ -21,7 +21,6 @@ vim.keymap.set('n', '<leader>hs', ':split<CR>', opts)
 vim.keymap.set('n', '<leader>d', ':Dashboard<CR>', opts)
 
 vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>', opts)
-vim.keymap.set('n', '<leader>b', ':JABSOpen<CR>', opts)
 vim.keymap.set('n', '<leader>fb', ':Neoformat<CR>', opts)
 
 vim.keymap.set('n', '<leader>ff', ':Telescope find_files<CR>', opts)
@@ -36,81 +35,10 @@ vim.keymap.set('n', '<leader>tqf', ':TodoQuickFix<CR>', opts)
 
 vim.keymap.set({'n', 'v'}, '<leader>/', ':CommentToggle<CR>', opts)
 
--- Aligns to 1 character
-vim.keymap.set(
-    'x',
-    'aa',
-    function()
-        require('align').align_to_char({
-            length = 1,
-        })
-    end,
-    opts
-)
+vim.keymap.set('n', '<leader>de', vim.diagnostic.open_float, opts)
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)
 
--- Aligns to 2 characters with previews
-vim.keymap.set(
-    'x',
-    'ad',
-    function()
-        require('align').align_to_char({
-            preview = true,
-            length = 2,
-        })
-    end,
-    opts
-)
-
--- Aligns to a string with previews
-vim.keymap.set(
-    'x',
-    'aw',
-    function()
-        require('align').align_to_string({
-            preview = true,
-            regex = false,
-        })
-    end,
-    opts
-)
-
--- Aligns to a Vim regex with previews
-vim.keymap.set(
-    'x',
-    'ar',
-    function()
-        require('align').align_to_string({
-            preview = true,
-            regex = true,
-        })
-    end,
-    opts
-)
-
--- Example gawip to align a paragraph to a string with previews
-vim.keymap.set(
-    'n',
-    'gaw',
-    function()
-        local a = require('align')
-        a.operator(
-            a.align_to_string,
-            {
-                regex = false,
-                preview = true,
-            }
-        )
-    end,
-    opts
-)
-
--- Example gaaip to align a paragraph to 1 character
-vim.keymap.set(
-    'n',
-    'gaa',
-    function()
-        local a = require('align')
-        a.operator(a.align_to_char)
-    end,
-    opts
-)
+vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
+vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
