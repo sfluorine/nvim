@@ -19,21 +19,127 @@ local keys = require('pckr.loader.keys')
 require('pckr').add{
     ---------------------------------------
     -- NOTE: PUT YOUR PLUGINS HERE --
-
-    'sakhnik/nvim-gdb';
-
-    'mg979/vim-visual-multi';
-
     'neovim/nvim-lspconfig';
-
     'hrsh7th/cmp-nvim-lsp';
+    'lukas-reineke/cmp-under-comparator';
     'hrsh7th/cmp-buffer';
     'hrsh7th/cmp-path';
     'hrsh7th/cmp-cmdline';
     'hrsh7th/nvim-cmp';
-
     'L3MON4D3/LuaSnip';
     'saadparwaiz1/cmp_luasnip';
+
+    'Tetralux/odin.vim';
+
+    'sainnhe/everforest';
+
+    {
+        'AlexvZyl/nordic.nvim',
+
+        config = function()
+            require 'nordic' .setup {
+                -- This callback can be used to override the colors used in the palette.
+                on_palette = function(palette) return palette end,
+                -- Enable bold keywords.
+                bold_keywords = false,
+                -- Enable italic comments.
+                italic_comments = true,
+                -- Enable general editor background transparency.
+                transparent_bg = false,
+                -- Enable brighter float border.
+                bright_border = false,
+                -- Reduce the overall amount of blue in the theme (diverges from base Nord).
+                reduced_blue = true,
+                -- Swap the dark background with the normal one.
+                swap_backgrounds = false,
+                -- Override the styling of any highlight group.
+                override = {},
+                -- Cursorline options.  Also includes visual/selection.
+                cursorline = {
+                    -- Bold font in cursorline.
+                    bold = true,
+                    -- Bold cursorline number.
+                    bold_number = true,
+                    -- Avialable styles: 'dark', 'light'.
+                    theme = 'dark',
+                    -- Blending the cursorline bg with the buffer bg.
+                    blend = 0.7,
+                },
+                noice = {
+                    -- Available styles: `classic`, `flat`.
+                    style = 'flat',
+                },
+                telescope = {
+                    -- Available styles: `classic`, `flat`.
+                    style = 'flat',
+                },
+                leap = {
+                    -- Dims the backdrop when using leap.
+                    dim_backdrop = false,
+                },
+                ts_context = {
+                    -- Enables dark background for treesitter-context window
+                    dark_background = true,
+                }
+            }
+        end
+    };
+
+    {
+        'ribru17/bamboo.nvim',
+        config = function()
+            -- Lua
+            require('bamboo').setup {
+                -- Main options --
+                -- NOTE: to use the light theme, set `vim.o.background = 'light'`
+                style = 'multiplex', -- Choose between 'vulgaris' (regular), 'multiplex' (greener), and 'light'
+                toggle_style_key = nil, -- Keybind to toggle theme style. Leave it nil to disable it, or set it to a string, e.g. "<leader>ts"
+                toggle_style_list = { 'vulgaris', 'multiplex', 'light' }, -- List of styles to toggle between
+                transparent = false, -- Show/hide background
+                dim_inactive = false, -- Dim inactive windows/buffers
+                term_colors = true, -- Change terminal color as per the selected theme style
+                ending_tildes = false, -- Show the end-of-buffer tildes. By default they are hidden
+                cmp_itemkind_reverse = false, -- reverse item kind highlights in cmp menu
+
+                -- Change code style ---
+                -- Options are italic, bold, underline, none
+                -- You can configure multiple style with comma separated, For e.g., keywords = 'italic,bold'
+                code_style = {
+                    comments = 'italic',
+                    conditionals = 'italic',
+                    keywords = 'none',
+                    functions = 'italic',
+                    namespaces = 'italic',
+                    parameters = 'italic',
+                    strings = 'none',
+                    variables = 'none',
+                },
+
+                -- Custom Highlights --
+                colors = {}, -- Override default colors
+                highlights = {}, -- Override highlight groups
+
+                -- Plugins Config --
+                diagnostics = {
+                    darker = false, -- darker colors for diagnostic
+                    undercurl = true, -- use undercurl instead of underline for diagnostics
+                    background = true, -- use background color for virtual text
+                },
+            }
+        end
+    };
+
+    {
+        'sainnhe/gruvbox-material',
+
+        config = function()
+            vim.cmd([[
+            let g:gruvbox_material_background = 'hard'
+            let g:gruvbox_material_better_performance = 1
+            ]])
+        end
+
+    };
 
     { 
         'rebelot/kanagawa.nvim',
@@ -47,7 +153,7 @@ require('pckr').add{
                 keywordStyle = { italic = true },
                 statementStyle = { bold = true },
                 typeStyle = { italic = true, bold = true },
-                transparent = true,         -- do not set background color
+                transparent = false,         -- do not set background color
                 dimInactive = false,         -- dim inactive window `:h hl-NormalNC`
                 terminalColors = true,       -- define vim.g.terminal_color_{0,17}
                 colors = {                   -- add/modify theme and palette colors
@@ -69,43 +175,31 @@ require('pckr').add{
     };
 
     {
-        'folke/tokyonight.nvim',
+        'folke/noice.nvim',
+
+        requires = {
+            -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+            'MunifTanjim/nui.nvim',
+        },
 
         config = function()
-            require("tokyonight").setup({
-                -- your configuration comes here
-                -- or leave it empty to use the default settings
-                style = "night", -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
-                light_style = "day", -- The theme is used when the background is set to light
-                transparent = false, -- Enable this to disable setting the background color
-                terminal_colors = true, -- Configure the colors used when opening a `:terminal` in [Neovim](https://github.com/neovim/neovim)
-                styles = {
-                    -- Style to be applied to different syntax groups
-                    -- Value is any valid attr-list value for `:help nvim_set_hl`
-                    comments = { italic = true },
-                    keywords = { italic = true },
-                    functions = {},
-                    variables = {},
-                    -- Background styles. Can be "dark", "transparent" or "normal"
-                    sidebars = "dark", -- style for sidebars, see below
-                    floats = "dark", -- style for floating windows
+            require('noice').setup({
+                lsp = {
+                    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+                    override = {
+                        ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+                        ["vim.lsp.util.stylize_markdown"] = true,
+                        ["cmp.entry.get_documentation"] = true,
+                    },
                 },
-                sidebars = { "qf", "help" }, -- Set a darker background on sidebar-like windows. For example: `["qf", "vista_kind", "terminal", "packer"]`
-                day_brightness = 0.3, -- Adjusts the brightness of the colors of the **Day** style. Number between 0 and 1, from dull to vibrant colors
-                hide_inactive_statusline = false, -- Enabling this option, will hide inactive statuslines and replace them with a thin border instead. Should work with the standard **StatusLine** and **LuaLine**.
-                dim_inactive = false, -- dims inactive windows
-                lualine_bold = true, -- When `true`, section headers in the lualine theme will be bold
-
-                --- You can override specific color groups to use other groups or a hex color
-                --- function will be called with a ColorScheme table
-                ---@param colors ColorScheme
-                on_colors = function(colors) end,
-
-                --- You can override specific highlights to use other groups or a hex color
-                --- function will be called with a Highlights and ColorScheme table
-                ---@param highlights Highlights
-                ---@param colors ColorScheme
-                on_highlights = function(highlights, colors) end,
+                -- you can enable a preset for easier configuration
+                presets = {
+                    bottom_search = true, -- use a classic bottom cmdline for search
+                    command_palette = true, -- position the cmdline and popupmenu together
+                    long_message_to_split = true, -- long messages will be sent to a split
+                    inc_rename = false, -- enables an input dialog for inc-rename.nvim
+                    lsp_doc_border = false, -- add a border to hover docs and signature help
+                },
             })
         end
     };
@@ -120,7 +214,7 @@ require('pckr').add{
 
         config = function()
             require'nvim-treesitter.configs'.setup {
-                ensure_installed = { "c", "cpp", "vim", "lua" },
+                ensure_installed = { "c", "cpp", "vim", "lua", "odin" },
 
                 -- Install parsers synchronously (only applied to `ensure_installed`)
                 sync_install = false,
@@ -209,15 +303,12 @@ require('pckr').add{
     };
 
     {
-        'nvim-lualine/lualine.nvim',
-        requires = { 'nvim-tree/nvim-web-devicons', opt = true },
+        'phaazon/hop.nvim',
+        branch = 'v2', -- optional but strongly recommended
 
         config = function()
-            require('lualine').setup({
-                options = {
-                    theme = 'tokyonight'
-                }
-            })
+            -- you can configure Hop the way you like here; see :h hop-config
+            require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
         end
     };
 

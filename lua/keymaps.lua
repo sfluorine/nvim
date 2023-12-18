@@ -18,7 +18,7 @@ vim.keymap.set('n', '<C-Right>', ':vertical resize +2<CR>', opts)
 vim.keymap.set('n', '<leader>vs', ':vsplit<CR>', opts)
 vim.keymap.set('n', '<leader>hs', ':split<CR>', opts)
 
-vim.keymap.set('n', '<leader>d', ':Dashboard<CR>', opts)
+vim.keymap.set('n', '<leader>da', ':Dashboard<CR>', opts)
 
 vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>', opts)
 vim.keymap.set('n', '<leader>fb', ':Neoformat<CR>', opts)
@@ -33,12 +33,16 @@ vim.keymap.set('n', '<leader>tn', ':TodoTelescope keywords=NOTE<CR>', opts)
 vim.keymap.set('n', '<leader>th', ':TodoTelescope keywords=HACK<CR>', opts)
 vim.keymap.set('n', '<leader>tqf', ':TodoQuickFix<CR>', opts)
 
+vim.keymap.set('n', '<leader>hw', ':HopWord<CR>', opts)
+vim.keymap.set('n', '<leader>hl', ':HopLine<CR>', opts)
+vim.keymap.set('n', '<leader>hp', ':HopPattern<CR>', opts)
+
 vim.keymap.set({'n', 'v'}, '<leader>/', ':CommentToggle<CR>', opts)
 
 vim.keymap.set('n', '<leader>de', vim.diagnostic.open_float, opts)
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)
 
 vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+vim.keymap.set('i', '<C-k>', vim.lsp.buf.signature_help, opts)
 vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
 vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)

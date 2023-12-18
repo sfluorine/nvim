@@ -16,7 +16,10 @@ vim.opt.cursorline = true
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.termguicolors = true
+vim.opt.ls = 2
 vim.opt.showmode = false
+vim.opt.showcmd = false
+vim.opt.ruler = true
 vim.opt.fillchars = {eob = ' '}
 vim.opt.wrap = false
 
@@ -24,6 +27,7 @@ vim.opt.incsearch = true
 vim.opt.hlsearch = false
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
+vim.opt.guicursor = ''
 
 vim.opt.cino = 'l1'
 
@@ -35,4 +39,8 @@ vim.cmd([[
     highlight LineNr guibg=NONE
     highlight CursorLine guibg=NONE guifg=NONE
     highlight CursorLineNr guibg=NONE guifg=NONE
+]])
+
+vim.cmd([[
+    set shortmess=aIWAF
 ]])

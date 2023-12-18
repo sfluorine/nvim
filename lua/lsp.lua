@@ -1,5 +1,3 @@
-local lspconfig = require('lspconfig')
-
 -- Set up nvim-cmp.
 local cmp = require('cmp')
 
@@ -35,12 +33,26 @@ cmp.setup({
             end
         end, { 'i', 's' }),
     }),
+
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
         { name = 'luasnip' }, -- For luasnip users.
     }, {
         { name = 'buffer' },
-    })
+    }),
+
+    sorting = {
+        comparators = {
+            cmp.config.compare.offset,
+            cmp.config.compare.exact,
+            cmp.config.compare.score,
+            require "cmp-under-comparator".under,
+            cmp.config.compare.kind,
+            cmp.config.compare.sort_text,
+            cmp.config.compare.length,
+            cmp.config.compare.order,
+        },
+    },
 })
 
 -- Set configuration for specific filetype.
@@ -72,7 +84,7 @@ cmp.setup.cmdline(':', {
 
 -- Set up lspconfig.
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
--- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+
 require('lspconfig')['rust_analyzer'].setup {
     capabilities = capabilities,
     settings = {
@@ -96,4 +108,26 @@ require('lspconfig')['rust_analyzer'].setup {
             },
         }
     }
+}
+
+require('lspconfig')['clangd'].setup {
+    capabilities = capabilities,
+}
+
+require('lspconfig').ols.setup {
+    capabilities = capabilities,
+    cmd = { "/home/freedbytes/bin/ols/ols" }
+}
+
+require('lspconfig').pylsp.setup{
+  settings = {
+    pylsp = {
+      plugins = {
+        pycodestyle = {
+          ignore = {'W391'},
+          maxLineLength = 100
+        }
+      }
+    }
+  }
 }
