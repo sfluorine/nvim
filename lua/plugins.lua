@@ -30,146 +30,58 @@ require('pckr').add{
     'saadparwaiz1/cmp_luasnip';
 
     'Tetralux/odin.vim';
+    'dart-lang/dart-vim-plugin';
 
     'sainnhe/everforest';
+    'AlexvZyl/nordic.nvim';
+    'ellisonleao/gruvbox.nvim';
+    'junegunn/fzf.vim';
+    'mg979/vim-visual-multi';
 
     {
-        'AlexvZyl/nordic.nvim',
-
+        'olimorris/onedarkpro.nvim',
         config = function()
-            require 'nordic' .setup {
-                -- This callback can be used to override the colors used in the palette.
-                on_palette = function(palette) return palette end,
-                -- Enable bold keywords.
-                bold_keywords = false,
-                -- Enable italic comments.
-                italic_comments = true,
-                -- Enable general editor background transparency.
-                transparent_bg = false,
-                -- Enable brighter float border.
-                bright_border = false,
-                -- Reduce the overall amount of blue in the theme (diverges from base Nord).
-                reduced_blue = true,
-                -- Swap the dark background with the normal one.
-                swap_backgrounds = false,
-                -- Override the styling of any highlight group.
-                override = {},
-                -- Cursorline options.  Also includes visual/selection.
-                cursorline = {
-                    -- Bold font in cursorline.
-                    bold = true,
-                    -- Bold cursorline number.
-                    bold_number = true,
-                    -- Avialable styles: 'dark', 'light'.
-                    theme = 'dark',
-                    -- Blending the cursorline bg with the buffer bg.
-                    blend = 0.7,
-                },
-                noice = {
-                    -- Available styles: `classic`, `flat`.
-                    style = 'flat',
-                },
-                telescope = {
-                    -- Available styles: `classic`, `flat`.
-                    style = 'flat',
-                },
-                leap = {
-                    -- Dims the backdrop when using leap.
-                    dim_backdrop = false,
-                },
-                ts_context = {
-                    -- Enables dark background for treesitter-context window
-                    dark_background = true,
+            require("onedarkpro").setup({
+                styles = {
+                    types = "NONE",
+                    methods = "NONE",
+                    numbers = "NONE",
+                    strings = "NONE",
+                    comments = "italic",
+                    keywords = "bold,italic",
+                    constants = "NONE",
+                    functions = "italic",
+                    operators = "NONE",
+                    variables = "NONE",
+                    parameters = "NONE",
+                    conditionals = "italic",
+                    virtual_text = "italic",
                 }
-            }
+            })
         end
     };
 
     {
-        'ribru17/bamboo.nvim',
+        'akinsho/flutter-tools.nvim',
+
+        requires = {
+            'nvim-lua/plenary.nvim',
+            'stevearc/dressing.nvim', -- optional for vim.ui.select
+        },
+
         config = function()
-            -- Lua
-            require('bamboo').setup {
-                -- Main options --
-                -- NOTE: to use the light theme, set `vim.o.background = 'light'`
-                style = 'multiplex', -- Choose between 'vulgaris' (regular), 'multiplex' (greener), and 'light'
-                toggle_style_key = nil, -- Keybind to toggle theme style. Leave it nil to disable it, or set it to a string, e.g. "<leader>ts"
-                toggle_style_list = { 'vulgaris', 'multiplex', 'light' }, -- List of styles to toggle between
-                transparent = false, -- Show/hide background
-                dim_inactive = false, -- Dim inactive windows/buffers
-                term_colors = true, -- Change terminal color as per the selected theme style
-                ending_tildes = false, -- Show the end-of-buffer tildes. By default they are hidden
-                cmp_itemkind_reverse = false, -- reverse item kind highlights in cmp menu
-
-                -- Change code style ---
-                -- Options are italic, bold, underline, none
-                -- You can configure multiple style with comma separated, For e.g., keywords = 'italic,bold'
-                code_style = {
-                    comments = 'italic',
-                    conditionals = 'italic',
-                    keywords = 'none',
-                    functions = 'italic',
-                    namespaces = 'italic',
-                    parameters = 'italic',
-                    strings = 'none',
-                    variables = 'none',
-                },
-
-                -- Custom Highlights --
-                colors = {}, -- Override default colors
-                highlights = {}, -- Override highlight groups
-
-                -- Plugins Config --
-                diagnostics = {
-                    darker = false, -- darker colors for diagnostic
-                    undercurl = true, -- use undercurl instead of underline for diagnostics
-                    background = true, -- use background color for virtual text
-                },
-            }
+            require("flutter-tools").setup {
+                flutter_path = "/home/freedbytes/bin/flutter/bin/flutter", -- <-- this takes priority over the lookup
+            } -- use defaults
         end
     };
 
     {
-        'sainnhe/gruvbox-material',
+        'kylechui/nvim-surround',
 
         config = function()
-            vim.cmd([[
-            let g:gruvbox_material_background = 'hard'
-            let g:gruvbox_material_better_performance = 1
-            ]])
-        end
-
-    };
-
-    { 
-        'rebelot/kanagawa.nvim',
-
-        config = function()
-            require('kanagawa').setup({
-                compile = false,             -- enable compiling the colorscheme
-                undercurl = true,            -- enable undercurls
-                commentStyle = { italic = true },
-                functionStyle = {},
-                keywordStyle = { italic = true },
-                statementStyle = { bold = true },
-                typeStyle = { italic = true, bold = true },
-                transparent = false,         -- do not set background color
-                dimInactive = false,         -- dim inactive window `:h hl-NormalNC`
-                terminalColors = true,       -- define vim.g.terminal_color_{0,17}
-                colors = {                   -- add/modify theme and palette colors
-                    palette = {},
-                    theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
-                },
-
-                overrides = function(colors) -- add/modify highlights
-                    return {}
-                end,
-
-                theme = "wave",              -- Load "wave" theme when 'background' option is not set
-                background = {               -- map the value of 'background' option to a theme
-                    dark = "wave",           -- try "dragon" !
-                    light = "lotus"
-                },
+            require("nvim-surround").setup({
+                -- Configuration here, or leave empty to use defaults
             })
         end
     };
@@ -249,48 +161,60 @@ require('pckr').add{
     };
 
     {
-        'nvim-tree/nvim-tree.lua',
-        requires = 'nvim-tree/nvim-web-devicons',
+        'mhartington/formatter.nvim',
 
         config = function()
-            require("nvim-tree").setup({
-                sort_by = "case_sensitive",
-                view = {
-                    width = 30,
-                },
-                renderer = {
-                    group_empty = true,
-                },
-                filters = {
-                    dotfiles = false,
-                },
+            -- Utilities for creating configurations
+            local util = require("formatter.util")
+
+            -- Provides the Format, FormatWrite, FormatLock, and FormatWriteLock commands
+            require("formatter").setup {
+                -- Enable or disable logging
+                logging = true,
+
+                -- Set the log level
+                log_level = vim.log.levels.WARN,
+
+                -- All formatter configurations are opt-in
+                filetype = {
+                    odin = {
+                        function()
+                            return {
+                                exe = "odinfmt",
+                                args = {
+                                    "-stdin",
+                                    util.get_current_buffer_file_path(),
+                                },
+                                stdin = true,
+                            }
+                        end
+                    },
+                    c = {
+                        function()
+                            return {
+                                exe = "clang-format",
+                                stdin = true,
+                            }
+                        end
+                    },
+                    -- Use the special "*" filetype for defining formatter configurations on
+                    -- any filetype
+                    ["*"] = {
+                        -- "formatter.filetypes.any" defines default configurations for any
+                        -- filetype
+                        require("formatter.filetypes.any").remove_trailing_whitespace
+                    }
+                }
+            }
+
+            local augroup = vim.api.nvim_create_augroup
+            local autocmd = vim.api.nvim_create_autocmd
+            augroup("__formatter__", { clear = true })
+            autocmd("BufWritePost", {
+                group = "__formatter__",
+                command = ":FormatWrite",
             })
         end
-    };
-
-    {
-        'sbdchd/neoformat',
-
-        config = function()
-            vim.g.neoformat_cpp_clangformat = {
-                exe = 'clang-format',
-                args = { '--style=file:".clang-format"' }
-            }
-
-            vim.g.neoformat_enabled_cpp = { 'clangformat' }
-            vim.g.neoformat_enabled_c = { 'clangformat' }
-
-            vim.g.neoformat_cmake_cmakeformat = {
-                exe = 'cmake-format',
-            }
-
-            vim.g.neoformat_enabled_cmake = { 'cmakeformat' }
-        end
-    };
-
-    {
-        'nvim-telescope/telescope.nvim', tag = '0.1.4',
-        requires = 'nvim-lua/plenary.nvim'
     };
 
     {
@@ -309,41 +233,6 @@ require('pckr').add{
         config = function()
             -- you can configure Hop the way you like here; see :h hop-config
             require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
-        end
-    };
-
-    {
-        'nvimdev/dashboard-nvim',
-
-        event = 'VimEnter',
-        requires = 'nvim-tree/nvim-web-devicons',
-
-        config = function()
-            local header = {
-                [[                                   ]],
-                [[   ⣴⣶⣤⡤⠦⣤⣀⣤⠆     ⣈⣭⣭⣿⣶⣿⣦⣼⣆         ]],
-                [[    ⠉⠻⢿⣿⠿⣿⣿⣶⣦⠤⠄⡠⢾⣿⣿⡿⠋⠉⠉⠻⣿⣿⡛⣦       ]],
-                [[          ⠈⢿⣿⣟⠦ ⣾⣿⣿⣷⠄⠄⠄⠄⠻⠿⢿⣿⣧⣄     ]],
-                [[           ⣸⣿⣿⢧ ⢻⠻⣿⣿⣷⣄⣀⠄⠢⣀⡀⠈⠙⠿⠄    ]],
-                [[          ⢠⣿⣿⣿⠈  ⠡⠌⣻⣿⣿⣿⣿⣿⣿⣿⣛⣳⣤⣀⣀   ]],
-                [[   ⢠⣧⣶⣥⡤⢄ ⣸⣿⣿⠘⠄ ⢀⣴⣿⣿⡿⠛⣿⣿⣧⠈⢿⠿⠟⠛⠻⠿⠄  ]],
-                [[  ⣰⣿⣿⠛⠻⣿⣿⡦⢹⣿⣷   ⢊⣿⣿⡏  ⢸⣿⣿⡇ ⢀⣠⣄⣾⠄   ]],
-                [[ ⣠⣿⠿⠛⠄⢀⣿⣿⣷⠘⢿⣿⣦⡀ ⢸⢿⣿⣿⣄ ⣸⣿⣿⡇⣪⣿⡿⠿⣿⣷⡄  ]],
-                [[ ⠙⠃   ⣼⣿⡟  ⠈⠻⣿⣿⣦⣌⡇⠻⣿⣿⣷⣿⣿⣿ ⣿⣿⡇⠄⠛⠻⢷⣄ ]],
-                [[      ⢻⣿⣿⣄   ⠈⠻⣿⣿⣿⣷⣿⣿⣿⣿⣿⡟ ⠫⢿⣿⡆     ]],
-                [[       ⠻⣿⣿⣿⣿⣶⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⡟⢀⣀⣤⣾⡿⠃     ]],
-                [[     ⢰⣶  ⣶ ⢶⣆⢀⣶⠂⣶⡶⠶⣦⡄⢰⣶⠶⢶⣦  ⣴⣶     ]],
-                [[     ⢸⣿⠶⠶⣿ ⠈⢻⣿⠁ ⣿⡇ ⢸⣿⢸⣿⢶⣾⠏ ⣸⣟⣹⣧    ]],
-                [[     ⠸⠿  ⠿  ⠸⠿  ⠿⠷⠶⠿⠃⠸⠿⠄⠙⠷⠤⠿⠉⠉⠿⠆   ]],
-                [[                                   ]],
-            }
-
-            require('dashboard').setup {
-                theme = 'hyper',
-                config = {
-                    header = header,
-                },
-            }
         end
     };
 

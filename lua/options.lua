@@ -36,11 +36,5 @@ vim.cmd([[
 ]])
 
 vim.cmd([[
-    highlight LineNr guibg=NONE
-    highlight CursorLine guibg=NONE guifg=NONE
-    highlight CursorLineNr guibg=NONE guifg=NONE
-]])
-
-vim.cmd([[
     set shortmess=aIWAF
 ]])

@@ -18,20 +18,9 @@ vim.keymap.set('n', '<C-Right>', ':vertical resize +2<CR>', opts)
 vim.keymap.set('n', '<leader>vs', ':vsplit<CR>', opts)
 vim.keymap.set('n', '<leader>hs', ':split<CR>', opts)
 
-vim.keymap.set('n', '<leader>da', ':Dashboard<CR>', opts)
+vim.keymap.set('n', '<leader>fb', ':Format<CR>', opts)
 
-vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>', opts)
-vim.keymap.set('n', '<leader>fb', ':Neoformat<CR>', opts)
-
-vim.keymap.set('n', '<leader>ff', ':Telescope find_files<CR>', opts)
-vim.keymap.set('n', '<leader>fh', ':Telescope find_files hidden=true<CR>', opts)
-
-vim.keymap.set('n', '<leader>fg', ':Telescope live_grep hidden=true<CR>', opts)
-
-vim.keymap.set('n', '<leader>tt', ':TodoTelescope keywords=TODO<CR>', opts)
-vim.keymap.set('n', '<leader>tn', ':TodoTelescope keywords=NOTE<CR>', opts)
-vim.keymap.set('n', '<leader>th', ':TodoTelescope keywords=HACK<CR>', opts)
-vim.keymap.set('n', '<leader>tqf', ':TodoQuickFix<CR>', opts)
+vim.keymap.set('n', '<leader>ff', ':FZF<CR>', opts)
 
 vim.keymap.set('n', '<leader>hw', ':HopWord<CR>', opts)
 vim.keymap.set('n', '<leader>hl', ':HopLine<CR>', opts)

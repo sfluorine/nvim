@@ -114,20 +114,40 @@ require('lspconfig')['clangd'].setup {
     capabilities = capabilities,
 }
 
-require('lspconfig').ols.setup {
-    capabilities = capabilities,
-    cmd = { "/home/freedbytes/bin/ols/ols" }
-}
+require('lspconfig').ols.setup {}
 
 require('lspconfig').pylsp.setup{
-  settings = {
-    pylsp = {
-      plugins = {
-        pycodestyle = {
-          ignore = {'W391'},
-          maxLineLength = 100
+    capabilities = capabilities,
+    settings = {
+        pylsp = {
+            plugins = {
+                pycodestyle = {
+                    ignore = {'W391'},
+                    maxLineLength = 100
+                }
+            }
         }
-      }
     }
-  }
 }
+
+require('lspconfig').tsserver.setup{
+    capabilities = capabilities,
+}
+
+require('lspconfig').kotlin_language_server.setup{}
+
+local client = vim.lsp.start_client({
+  name = 'mordekaiser',
+  cmd = {'/home/freedbytes/programming/mordekaiser/run.sh'},
+})
+
+if not client then
+    vim.notify "mordekaiser client does not run"
+end
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "markdown",
+    callback = function()
+        vim.lsp.buf_attach_client(0, client)
+    end
+})
