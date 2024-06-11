@@ -1,0 +1,7 @@
+{
+  "lackluster.nvim": { "branch": "main", "commit": "a4a90ea82a326086af994d421dab5c617518dd1e" },
+  "lazy.nvim": { "branch": "main", "commit": "eb4957442e3182f051b0ae11da32e06d22c190e3" },
+  "mini.nvim": { "branch": "main", "commit": "f1dd64cf2ac1b348bd440e59446abf680c7188d6" },
+  "nvim-treesitter": { "branch": "master", "commit": "9a7ad2ff7a7ea81016aca2fc89c9b2c1a5365421" },
+  "vim-visual-multi": { "branch": "master", "commit": "b84a6d42c1c10678928b0bf8327f378c8bc8af5a" }
+}
