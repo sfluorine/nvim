@@ -56,56 +56,87 @@ return {
 		end
 	},
     {
-        'smoka7/hop.nvim',
+        "smoka7/hop.nvim",
         version = "*",
         opts = {
-            keys = 'etovxqpdygfblzhckisuran'
+            keys = "etovxqpdygfblzhckisuran"
         }
     },
     {
         "VonHeikemen/lsp-zero.nvim",
-        branch = 'v3.x',
+        branch = "v3.x",
         init = function()
-            local lsp_zero = require('lsp-zero')
+            local lsp_zero = require("lsp-zero")
             lsp_zero.extend_lspconfig()
 
             lsp_zero.on_attach(function(client, bufnr)
                 lsp_zero.default_keymaps({buffer = bufnr})
             end)
 
-            local cmp = require('cmp')
+            local cmp = require("cmp")
 
             cmp.setup({
                 sources = {
-                    {name = 'nvim_lsp'},
+                    {name = "nvim_lsp"},
                 },
                 mapping = {
-                    ['<C-e>'] = cmp.mapping.abort(),
-                    ['<CR>'] = cmp.mapping.confirm({select = false}),
-                    ['<Tab>'] = cmp.mapping.select_next_item({behavior = 'select'}),
-                    ['<S-Tab>'] = cmp.mapping.select_prev_item({behavior = 'select'}),
+                    ["<C-e>"] = cmp.mapping.abort(),
+                    ["<Enter>"] = function(fallback)
+                        -- Don't block <CR> if signature help is active
+                        -- https://github.com/hrsh7th/cmp-nvim-lsp-signature-help/issues/13
+                        if not cmp.visible() or not cmp.get_selected_entry() or cmp.get_selected_entry().source.name == 'nvim_lsp_signature_help' then
+                            fallback()
+                        else
+                            cmp.confirm({
+                                -- Replace word if completing in the middle of a word
+                                -- https://github.com/hrsh7th/nvim-cmp/issues/664
+                                behavior = cmp.ConfirmBehavior.Replace,
+                                -- Don't select first item on CR if nothing was selected
+                                select = false,
+                            })
+                        end
+                    end,
+                    ["<Tab>"] = cmp.mapping(function(fallback)
+                        -- This little snippet will confirm with tab, and if no entry is selected, will confirm the first item
+                        if cmp.visible() then
+                            local entry = cmp.get_selected_entry()
+                            if not entry then
+                                cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+                            else
+                                cmp.confirm()
+                            end
+                        else
+                            fallback()
+                        end
+                    end),
+                    ["<S-Tab>"] = cmp.mapping(function(fallback)
+                        -- This little snippet will confirm with tab, and if no entry is selected, will confirm the first item
+                        if cmp.visible() then
+                            local entry = cmp.get_selected_entry()
+                            if not entry then
+                                cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+                            else
+                                cmp.confirm()
+                            end
+                        else
+                            fallback()
+                        end
+                    end),
                 },
                 snippet = {
                     expand = function(args)
-                        require('luasnip').lsp_expand(args.body)
+                        require("luasnip").lsp_expand(args.body)
                     end,
                 },
             })
 
-            -- require('lspconfig').clangd.setup({})
-            require('lspconfig').html.setup({})
-            require('lspconfig').tailwindcss.setup({})
-            require('lspconfig').marksman.setup({})
-            require('lspconfig').lua_ls.setup({})
-            require('lspconfig').emmet_language_server.setup{}
-            require('lspconfig').eslint.setup({
-                on_attach = function(client, bufnr)
-                    vim.api.nvim_create_autocmd("BufWritePre", {
-                        buffer = bufnr,
-                        command = "EslintFixAll",
-                    })
-                end,
-            })
+            require("lspconfig").clangd.setup({})
+            require("lspconfig").html.setup({})
+            require("lspconfig").tailwindcss.setup({})
+            require("lspconfig").marksman.setup({})
+            require("lspconfig").lua_ls.setup({})
+            require("lspconfig").emmet_language_server.setup({})
+            require("lspconfig").tsserver.setup({})
         end
     },
     {"mg979/vim-visual-multi"},
@@ -114,8 +145,8 @@ return {
     {"hrsh7th/nvim-cmp"},
     {"L3MON4D3/LuaSnip"},
     {
-        'barrett-ruth/live-server.nvim',
-        cmd = { 'LiveServerStart', 'LiveServerStop' },
+        "barrett-ruth/live-server.nvim",
+        cmd = { "LiveServerStart", "LiveServerStop" },
         config = true
     }
 }

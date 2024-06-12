@@ -27,6 +27,7 @@ vim.cmd([[
 	set tabstop=4
 	set softtabstop=4
 	set expandtab
+    set autoindent
 	set shiftwidth=4
 	set wildmode=longest,list
 	set cc=80
