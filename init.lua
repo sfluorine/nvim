@@ -27,7 +27,6 @@ vim.cmd([[
 	set tabstop=4
 	set softtabstop=4
 	set expandtab
-    set autoindent
 	set shiftwidth=4
 	set wildmode=longest,list
 	set cc=80
@@ -39,12 +38,25 @@ vim.cmd([[
 	filetype plugin on
 ]])
 
-local opt = {
-    noremap = true,
-    silent = true,
-}
-
-vim.keymap.set("n", "<leader>hw", ":HopWord<CR>", opt)
-vim.keymap.set("n", "<leader>hl", ":HopLine<CR>", opt)
-vim.keymap.set("n", "<leader>st", ":lua MiniTrailspace.trim()<CR>", opt)
-vim.keymap.set("n", "<leader>f", ":lua MiniFiles.open()<CR> :lua MiniFiles.reset()<CR>", opt)
+local which_key = require("which-key")
+which_key.register({
+    f = {
+        name = "file",
+        f = { ":Telescope find_files initial_mode=normal<CR>", "Find file" },
+        g = { ":Telescope live_grep initial_mode=normal<CR>", "Grep file" },
+        s = { ":lua MiniFiles.open()<CR> :lua MiniFiles.reset()<CR>", "Edit filesystem" },
+    },
+    b = {
+        name = "buffer",
+        b = { ":Telescope buffers initial_mode=normal<CR>", "Find buffer" },
+    },
+    c = {
+        name = "code",
+        t = { ":lua MiniTrailspace.trim()<CR>", "Trim trailing whitespaces" },
+    },
+    h = {
+        name = "hop",
+        w = { ":HopWord<CR>", "Hop word" },
+        l = { ":HopLine<CR>", "Hop line" },
+    },
+}, { prefix = "<leader>" })

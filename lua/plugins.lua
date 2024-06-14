@@ -44,6 +44,7 @@ return {
 			require("mini.comment").setup()
 			require("mini.completion").setup()
 			require("mini.cursorword").setup()
+			require("mini.files").setup()
 			require("mini.indentscope").setup()
 			require("mini.move").setup()
 			require("mini.notify").setup()
@@ -51,8 +52,8 @@ return {
 			require("mini.starter").setup()
 			require("mini.statusline").setup()
 			require("mini.surround").setup()
-			require("mini.files").setup()
 			require("mini.trailspace").setup()
+            require("mini.tabline").setup()
 		end
 	},
     {
@@ -130,13 +131,19 @@ return {
                 },
             })
 
-            require("lspconfig").clangd.setup({})
-            require("lspconfig").html.setup({})
-            require("lspconfig").tailwindcss.setup({})
-            require("lspconfig").marksman.setup({})
-            require("lspconfig").lua_ls.setup({})
-            require("lspconfig").emmet_language_server.setup({})
-            require("lspconfig").tsserver.setup({})
+            local lspconfig = require("lspconfig")
+            local util = lspconfig.util
+
+            -- lspconfig.clangd.setup({})
+            lspconfig.html.setup({})
+            lspconfig.tailwindcss.setup({})
+            lspconfig.marksman.setup({})
+            lspconfig.lua_ls.setup({})
+            lspconfig.emmet_language_server.setup({})
+            lspconfig.tsserver.setup({})
+            lspconfig.neocmake.setup({
+                root_dir = util.root_pattern(".git", "cmake", "CMakeLists.txt")
+            })
         end
     },
     {"mg979/vim-visual-multi"},
@@ -144,9 +151,27 @@ return {
     {"hrsh7th/cmp-nvim-lsp"},
     {"hrsh7th/nvim-cmp"},
     {"L3MON4D3/LuaSnip"},
+    {"nvim-tree/nvim-web-devicons"},
     {
         "barrett-ruth/live-server.nvim",
         cmd = { "LiveServerStart", "LiveServerStop" },
         config = true
+    },
+    {
+        'nvim-telescope/telescope.nvim', tag = '0.1.6',
+        -- or                              , branch = '0.1.x',
+        dependencies = { 'nvim-lua/plenary.nvim' }
+    },
+    {
+        "folke/which-key.nvim",
+        event = "VeryLazy",
+        init = function()
+            vim.o.timeout = true
+            vim.o.timeoutlen = 300
+        end,
+        opts = {
+            -- your configuration comes here
+            -- or leave it empty to use the default settings
+        }
     }
 }
