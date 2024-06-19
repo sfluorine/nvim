@@ -132,18 +132,13 @@ return {
             })
 
             local lspconfig = require("lspconfig")
-            local util = lspconfig.util
 
-            -- lspconfig.clangd.setup({})
             lspconfig.html.setup({})
             lspconfig.tailwindcss.setup({})
             lspconfig.marksman.setup({})
             lspconfig.lua_ls.setup({})
             lspconfig.emmet_language_server.setup({})
             lspconfig.tsserver.setup({})
-            lspconfig.neocmake.setup({
-                root_dir = util.root_pattern(".git", "cmake", "CMakeLists.txt")
-            })
         end
     },
     {"mg979/vim-visual-multi"},
