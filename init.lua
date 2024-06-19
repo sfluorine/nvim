@@ -59,4 +59,9 @@ which_key.register({
         w = { ":HopWord<CR>", "Hop word" },
         l = { ":HopLine<CR>", "Hop line" },
     },
+    s = {
+        name = "split",
+        v = { ":vs<CR>", "Split vertically" },
+        h = { ":split<CR>", "Split horizontally" },
+    },
 }, { prefix = "<leader>" })
