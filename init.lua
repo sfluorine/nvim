@@ -51,6 +51,7 @@ which_key.register({
     b = {
         name = "buffer",
         b = { ":Telescope buffers initial_mode=normal<CR>", "Find buffer" },
+        d = { ":bdelete<CR>", "Delete buffer" }
     },
     c = {
         name = "code",
