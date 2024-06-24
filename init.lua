@@ -17,6 +17,8 @@ vim.g.maplocalleader = "\\" -- Same for `maplocalleader`
 
 require("lazy").setup("plugins")
 
+vim.cmd("colorscheme no-clown-fiesta")
+
 vim.notify = require("notify")
 
 vim.cmd([[

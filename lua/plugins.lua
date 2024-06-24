@@ -1,4 +1,5 @@
 return {
+    { "aktersnurra/no-clown-fiesta.nvim" },
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
@@ -23,16 +24,6 @@ return {
                 highlight = { enable = true },
                 indent = { enable = true },
             })
-        end
-    },
-    {
-        "slugbyte/lackluster.nvim",
-        lazy = false,
-        priority = 1000,
-        init = function()
-            -- vim.cmd.colorscheme("lackluster")
-            -- vim.cmd.colorscheme("lackluster-hack") -- my favorite
-            vim.cmd.colorscheme("lackluster-mint")
         end
     },
     {
@@ -124,42 +115,25 @@ return {
                 mapping = {
                     ["<C-e>"] = cmp.mapping.abort(),
                     ["<Enter>"] = function(fallback)
-                        -- Don't block <CR> if signature help is active
-                        -- https://github.com/hrsh7th/cmp-nvim-lsp-signature-help/issues/13
                         if not cmp.visible() or not cmp.get_selected_entry() or cmp.get_selected_entry().source.name == 'nvim_lsp_signature_help' then
                             fallback()
                         else
                             cmp.confirm({
-                                -- Replace word if completing in the middle of a word
-                                -- https://github.com/hrsh7th/nvim-cmp/issues/664
                                 behavior = cmp.ConfirmBehavior.Replace,
-                                -- Don't select first item on CR if nothing was selected
                                 select = false,
                             })
                         end
                     end,
                     ["<Tab>"] = cmp.mapping(function(fallback)
-                        -- This little snippet will confirm with tab, and if no entry is selected, will confirm the first item
                         if cmp.visible() then
-                            local entry = cmp.get_selected_entry()
-                            if not entry then
                                 cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-                            else
-                                cmp.confirm()
-                            end
                         else
                             fallback()
                         end
                     end),
                     ["<S-Tab>"] = cmp.mapping(function(fallback)
-                        -- This little snippet will confirm with tab, and if no entry is selected, will confirm the first item
                         if cmp.visible() then
-                            local entry = cmp.get_selected_entry()
-                            if not entry then
-                                cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
-                            else
-                                cmp.confirm()
-                            end
+                            cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
                         else
                             fallback()
                         end
@@ -180,6 +154,23 @@ return {
             lspconfig.lua_ls.setup({})
             lspconfig.emmet_language_server.setup({})
             lspconfig.tsserver.setup({})
+        end
+    },
+    {"williamboman/mason.nvim"},
+    {
+        "williamboman/mason-lspconfig.nvim",
+        init = function()
+            require("mason").setup()
+            require("mason-lspconfig").setup({
+                ensure_installed = {
+                    "html",
+                    "tailwindcss",
+                    "marksman",
+                    "lua_ls",
+                    "emmet_language_server",
+                    "tsserver",
+                }
+            })
         end
     },
     {"mg979/vim-visual-multi"},
