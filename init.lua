@@ -17,8 +17,6 @@ vim.g.maplocalleader = "\\" -- Same for `maplocalleader`
 
 require("lazy").setup("plugins")
 
-vim.cmd("colorscheme no-clown-fiesta")
-
 vim.notify = require("notify")
 
 vim.cmd([[
@@ -47,12 +45,12 @@ which_key.register({
     f = {
         name = "file",
         f = { ":Telescope find_files initial_mode=normal<CR>", "Find file" },
-        g = { ":Telescope live_grep initial_mode=normal<CR>", "Grep file" },
+        g = { ":Telescope live_grep<CR>", "Grep file" },
         s = { ":lua MiniFiles.open()<CR> :lua MiniFiles.reset()<CR>", "Edit filesystem" },
     },
     b = {
         name = "buffer",
-        b = { ":Telescope buffers initial_mode=normal<CR>", "Find buffer" },
+        b = { ":Telescope buffers<CR>", "Find buffer" },
         d = { ":bdelete<CR>", "Delete buffer" }
     },
     c = {

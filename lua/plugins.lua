@@ -1,5 +1,15 @@
 return {
-    { "aktersnurra/no-clown-fiesta.nvim" },
+    {
+        "sainnhe/everforest",
+        lazy = false,
+        priority = 1000,
+        config = function()
+            vim.g.everforest_enable_italic = true
+            vim.g.everforest_transparent_background = true
+            vim.g.everforest_better_performance = true
+            vim.cmd.colorscheme('everforest')
+        end
+    },
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
@@ -126,7 +136,7 @@ return {
                     end,
                     ["<Tab>"] = cmp.mapping(function(fallback)
                         if cmp.visible() then
-                                cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+                            cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
                         else
                             fallback()
                         end
