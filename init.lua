@@ -29,9 +29,9 @@ vim.cmd([[
     set tabstop=4
     set softtabstop=4
     set expandtab
+    set nowrap
     set shiftwidth=4
     set wildmode=longest,list
-    set cc=80
     set clipboard=unnamedplus
     set spell
     set noswapfile
