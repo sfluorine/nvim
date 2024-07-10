@@ -1,19 +1,47 @@
 return {
     {
-        "sainnhe/everforest",
-        lazy = false,
-        priority = 1000,
+        "EdenEast/nightfox.nvim",
         config = function()
-            vim.g.everforest_enable_italic = true
-            vim.g.everforest_transparent_background = true
-            vim.g.everforest_better_performance = true
-            vim.cmd.colorscheme('everforest')
+            require('nightfox').setup({
+                options = {
+                    -- Compiled file's destination location
+                    compile_path = vim.fn.stdpath("cache") .. "/nightfox",
+                    compile_file_suffix = "_compiled", -- Compiled file suffix
+                    transparent = true,     -- Disable setting background
+                    terminal_colors = true,  -- Set terminal colors (vim.g.terminal_color_*) used in `:terminal`
+                    dim_inactive = false,    -- Non focused panes set to alternative background
+                    module_default = true,   -- Default enable value for modules
+                    styles = {               -- Style to be applied to different syntax groups
+                        comments = "italic",     -- Value is any valid attr-list value `:help attr-list`
+                        conditionals = "italic",
+                        constants = "bold",
+                        functions = "NONE",
+                        keywords = "italic,bold",
+                        numbers = "NONE",
+                        operators = "NONE",
+                        strings = "NONE",
+                        types = "italic,bold",
+                        variables = "NONE",
+                    },
+                    inverse = {             -- Inverse highlight for different types
+                        match_paren = true,
+                        visual = true,
+                        search = true,
+                    },
+                    modules = {             -- List of various plugins and additional options
+                        -- ...
+                    },
+                },
+            })
+
+            -- setup must be called before loading
+            vim.cmd("colorscheme nordfox")
         end
     },
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
-        config = function ()
+        config = function()
             local configs = require("nvim-treesitter.configs")
 
             configs.setup({
@@ -44,22 +72,22 @@ return {
             require("mini.basics").setup({
                 -- Options. Set to `false` to disable.
                 options = {
-                    -- Basic options ('number', 'ignorecase', and many more)
+                    -- Basic options ("number", "ignorecase", and many more)
                     basic = false,
 
-                    -- Extra UI features ('winblend', 'cmdheight=0', ...)
+                    -- Extra UI features ("winblend", "cmdheight=0", ...)
                     extra_ui = false,
 
-                    -- Presets for window borders ('single', 'double', ...)
-                    win_borders = 'default',
+                    -- Presets for window borders ("single", "double", ...)
+                    win_borders = "default",
                 },
 
                 -- Mappings. Set to `false` to disable.
                 mappings = {
-                    -- Basic mappings (better 'jk', save with Ctrl+S, ...)
+                    -- Basic mappings (better "jk", save with Ctrl+S, ...)
                     basic = true,
 
-                    -- Prefix for mappings that toggle common options ('wrap', 'spell', ...).
+                    -- Prefix for mappings that toggle common options ("wrap", "spell", ...).
                     -- Supply empty string to not create these mappings.
                     option_toggle_prefix = [[\]],
 
@@ -75,7 +103,7 @@ return {
                     -- Basic autocommands (highlight on yank, start Insert in terminal, ...)
                     basic = true,
 
-                    -- Set 'relativenumber' only in linewise and blockwise Visual mode
+                    -- Set "relativenumber" only in linewise and blockwise Visual mode
                     relnum_in_visual_mode = false,
                 },
 
@@ -84,9 +112,9 @@ return {
             }
             );
             require("mini.comment").setup()
-            require("mini.completion").setup()
             require("mini.cursorword").setup()
             require("mini.files").setup()
+            require("mini.completion").setup()
             require("mini.indentscope").setup()
             require("mini.move").setup()
             require("mini.notify").setup()
@@ -112,7 +140,7 @@ return {
             local lsp_zero = require("lsp-zero")
             lsp_zero.extend_lspconfig()
 
-            lsp_zero.on_attach(function(client, bufnr)
+            lsp_zero.on_attach(function(_, bufnr)
                 lsp_zero.default_keymaps({buffer = bufnr})
             end)
 
@@ -125,7 +153,7 @@ return {
                 mapping = {
                     ["<C-e>"] = cmp.mapping.abort(),
                     ["<Enter>"] = function(fallback)
-                        if not cmp.visible() or not cmp.get_selected_entry() or cmp.get_selected_entry().source.name == 'nvim_lsp_signature_help' then
+                        if not cmp.visible() or not cmp.get_selected_entry() or cmp.get_selected_entry().source.name == "nvim_lsp_signature_help" then
                             fallback()
                         else
                             cmp.confirm({
@@ -195,9 +223,9 @@ return {
         config = true
     },
     {
-        'nvim-telescope/telescope.nvim', tag = '0.1.6',
-        -- or                              , branch = '0.1.x',
-        dependencies = { 'nvim-lua/plenary.nvim' }
+        "nvim-telescope/telescope.nvim", tag = "0.1.6",
+        -- or                              , branch = "0.1.x",
+        dependencies = { "nvim-lua/plenary.nvim" }
     },
     {
         "folke/which-key.nvim",
@@ -225,7 +253,7 @@ return {
                     -- Trim trailing `:` from prompt
                     trim_prompt = true,
 
-                    -- Can be 'left', 'right', or 'center'
+                    -- Can be "left", "right", or "center"
                     title_pos = "center",
 
                     -- When true, input will start in insert mode.
@@ -234,7 +262,7 @@ return {
                     -- These are passed to nvim_open_win
                     border = "rounded",
 
-                    -- 'editor' and 'win' will default to being centered
+                    -- "editor" and "win" will default to being centered
                     relative = "cursor",
 
                     -- These can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
@@ -291,7 +319,7 @@ return {
 
                     -- Options for telescope selector
                     -- These are passed into the telescope picker directly. Can be used like:
-                    -- telescope = require('telescope.themes').get_ivy({...})
+                    -- telescope = require("telescope.themes").get_ivy({...})
                     telescope = nil,
 
                     -- Options for fzf selector
@@ -337,7 +365,7 @@ return {
                         show_numbers = true,
                         -- These are passed to nvim_open_win
                         border = "rounded",
-                        -- 'editor' and 'win' will default to being centered
+                        -- "editor" and "win" will default to being centered
                         relative = "editor",
 
                         buf_options = {},
@@ -380,5 +408,11 @@ return {
         end,
         opts = {},
     },
-    { "rcarriga/nvim-notify" }
+    {
+        "rcarriga/nvim-notify",
+
+        init = function()
+            vim.notify = require("notify")
+        end
+    }
 }

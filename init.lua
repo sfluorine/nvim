@@ -10,14 +10,13 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
         lazypath,
     })
 end
+
 vim.opt.rtp:prepend(lazypath)
 
 vim.g.mapleader = " " -- Make sure to set `mapleader` before lazy so your mappings are correct
 vim.g.maplocalleader = "\\" -- Same for `maplocalleader`
 
 require("lazy").setup("plugins")
-
-vim.notify = require("notify")
 
 vim.cmd([[
     set nocompatible
@@ -30,6 +29,7 @@ vim.cmd([[
     set softtabstop=4
     set expandtab
     set nowrap
+    set nohlsearch
     set shiftwidth=4
     set wildmode=longest,list
     set clipboard=unnamedplus
@@ -44,7 +44,7 @@ local which_key = require("which-key")
 which_key.register({
     f = {
         name = "file",
-        f = { ":Telescope find_files initial_mode=normal<CR>", "Find file" },
+        f = { ":Telescope find_files<CR>", "Find file" },
         g = { ":Telescope live_grep<CR>", "Grep file" },
         s = { ":lua MiniFiles.open()<CR> :lua MiniFiles.reset()<CR>", "Edit filesystem" },
     },
